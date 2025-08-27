@@ -1,16 +1,16 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Finanças", page_icon="🤑")
+st.set_page_config(page_title="Conciliar e Analisar", page_icon="🤑")
 
-st.text("Ola Mundo!")
+st.text("Visão Pagamentos")
 
 st.markdown("""
 #Boas Vindas!
             
-            ##Nosso APP Financeiro
+            ##Nosso APP com a visão dos Pagamentos
 
-            Espero que voce curta a experiencia da nossa solução para organização financeira
+            Espero que voce curta a experiencia da nossa solução para organização dos pagamentos
 
 """)
 
@@ -51,3 +51,10 @@ if file_upload:
 
         # Gráfico de Distribuição
         st.bar_chart(df_instituicao.loc[date])
+    
+    df_data = df.groupby(by="Data")[["Valor"]].sum()
+    df_data["lag_1"] = df_data["Valor"].shift(1)
+    df_data["Diferença Mensal"] = df_data["Valor"] - df_data["lag_1"]
+
+    st.dataframe(df_data)
+    st.dataframe(df_data)
